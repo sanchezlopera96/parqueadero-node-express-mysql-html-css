@@ -1,29 +1,27 @@
-import express from "express"
-import mysql from 'mysql'
+import express from "express";
+import mysql from 'mysql';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
-// Configuración de la conexión a la base de datos
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'parqueadero_db',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
-   
-// Conectar a la base de datos
+
+
 db.connect((err) => {
   if (err) {
     throw err;
   }
   console.log('Conectado a la base de datos MySQL');
 });
- 
-// Iniciar el servidor
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor en ejecución en el puerto ${PORT}`);
 });
-
-
-
